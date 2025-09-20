@@ -1,0 +1,13 @@
+name: Scheduled Cron (call cron-protected)
+
+on:
+  schedule:
+    # GitHub Actions minimum 5-minute cron; runs at every 5 minutes
+    - cron: '*/5 * * * *'
+jobs:
+  call-cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call cron endpoint
+        run: |
+          curl -fsS -X POST "https://your-deployment.example.com/api/cron-protected" -H "x-cron-secret: ${{ secrets.CRON_SECRET }}" || true
